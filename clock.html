@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="display">
+            00:00:00
+        </h1>
+        <button onclick="watchstop()">
+            <h3>stop</h3>
+        </button>
+        <button onclick="watchstart()">
+            <h3>start</h3>
+        </button>
+        <button onclick="watchreset()">
+            <h3>reset</h3>
+        </button>
+    </div>
+    <script>
+        let [hours, minutes, seconds] = [0, 0, 0];
+        let display = document.getElementById("display");
+        let timer = null;
+
+        function stopwatch() {
+            seconds++;
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes == 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            display.innerHTML = (hours < 10 ? "0" + hours : hours) + ":" + 
+                                (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                                (seconds < 10 ? "0" + seconds : seconds);
+        }
+
+        function watchstart() {
+            if (timer !== null) {
+                clearInterval(timer);
+            }
+            timer = setInterval(stopwatch, 1000);
+        }
+
+        function watchstop() {
+            clearInterval(timer);
+        }
+
+        function watchreset() {
+            clearInterval(timer);
+            [hours, minutes, seconds] = [0, 0, 0];
+            display.innerHTML = "00:00:00";
+        }
+    </script>
+</body>
+</html>
